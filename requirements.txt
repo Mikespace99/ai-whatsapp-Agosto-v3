@@ -41,5 +41,5 @@ uvicorn
 requests
 supabase
 openai
-Jinja2
+jinja2
 python-multipart
