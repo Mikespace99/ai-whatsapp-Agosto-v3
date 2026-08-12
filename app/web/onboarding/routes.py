@@ -190,7 +190,11 @@ def hours_page(request: Request):
         return RedirectResponse(url="/onboarding", status_code=302)
 
     _, _, tenant = result
-    existing = {row["day_of_week"]: row for row in get_working_hours(tenant["id"])}
+    
+    existing = {
+    row["day"]: row
+    for row in get_working_hours(tenant["id"])
+     }
 
     days = [
         {
