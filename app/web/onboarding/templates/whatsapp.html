@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}WhatsApp Business{% endblock %}
+{% block content %}
+<div class="shell">
+    <p class="eyebrow">Onboarding</p>
+    <h1>Collega WhatsApp Business</h1>
+
+    <div class="card">
+        <p class="card-desc" style="margin-bottom:16px;">
+            Serve un <strong>token permanente</strong> (System User su
+            Meta Business Suite), non quello temporaneo di 24 ore —
+            altrimenti l'assistente smette di rispondere ogni giorno.
+        </p>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="post" action="/onboarding/whatsapp">
+            <label>Numero WhatsApp (formato Meta, es. 15551234567)</label>
+            <input type="text" name="phone_number" value="{{ account.phone_number if account else '' }}" required>
+
+            <label>Phone Number ID</label>
+            <input type="text" name="phone_number_id" value="{{ account.phone_number_id if account else '' }}" required>
+
+            <label>Access Token</label>
+            <input type="text" name="access_token" value="{{ account.access_token if account else '' }}" required>
+
+            <button type="submit">Salva</button>
+        </form>
+    </div>
+
+    <p class="muted-link"><a href="/onboarding">← Torna alla panoramica</a></p>
+</div>
+{% endblock %}
