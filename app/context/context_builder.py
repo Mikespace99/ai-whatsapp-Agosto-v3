@@ -13,8 +13,8 @@ def build_context(
     whatsapp_account=None,
     calendar=None,
     suspended=None,
-    blocked=None
-    is_new_session=False,
+    blocked=None,
+    is_new_session=False
 ):
     """
     Costruisce il Context ufficiale da passare ai workflow n8n
