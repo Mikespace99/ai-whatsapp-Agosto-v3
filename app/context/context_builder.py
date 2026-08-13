@@ -14,6 +14,7 @@ def build_context(
     calendar=None,
     suspended=None,
     blocked=None
+    is_new_session=False,
 ):
     """
     Costruisce il Context ufficiale da passare ai workflow n8n
@@ -213,13 +214,16 @@ def build_context(
         # ---------------------------------------------------------
         # RUNTIME
         # ---------------------------------------------------------
+        
         "runtime": {
-            "request_received_at": received_at,
-            "workflow_started_at": None,
-            "current_timestamp": None,
-            "timezone": tenant.get("timezone")
+           "request_received_at": received_at,
+           "workflow_started_at": None,
+           "current_timestamp": None,
+           "timezone": tenant.get("timezone"),
+           "is_new_session": is_new_session   # ← aggiungi questa riga
         },
 
+        
         # ---------------------------------------------------------
         # METADATA
         # ---------------------------------------------------------
