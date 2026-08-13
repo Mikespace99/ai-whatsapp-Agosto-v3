@@ -1,0 +1,82 @@
+{% from "_macros.html" import step_card %}
+{% extends "base.html" %}
+{% block title %}Configura il tuo assistente{% endblock %}
+{% block content %}
+<div class="shell">
+
+    <p class="eyebrow">Onboarding — {{ email }}</p>
+    <h1>Attiviamo il tuo assistente</h1>
+
+    {% if is_live %}
+    <div class="success-banner" style="display:flex; margin-bottom:20px;">
+        ✅ Il tuo assistente è attivo e risponde ai clienti su WhatsApp.
+    </div>
+    {% elif whatsapp_missing %}
+    <div class="warning-banner">
+        ⚠️ Il tuo assistente non risponde ancora ai clienti — manca il collegamento WhatsApp.
+    </div>
+    {% elif has_tenant %}
+    <div class="warning-banner">
+        ⚠️ Quasi pronto — completa Orari e Servizi per attivare l'assistente.
+    </div>
+    {% endif %}
+
+    <p class="card-desc" style="margin-bottom: 28px;">
+        {% if has_tenant %}
+        Completa gli step qui sotto nell'ordine che preferisci — non c'è un percorso obbligato.
+        {% else %}
+        Iniziamo dal nome della tua attività.
+        {% endif %}
+    </p>
+
+    {% if has_tenant %}
+
+        {% call step_card(1, "Attività", tenant.business_name, "done") %}
+        <p class="card-desc" style="margin-top:14px;">
+            {{ tenant.timezone }} · lingua: {{ tenant.language }}
+            {% if tenant.assistant_name %} · assistente: {{ tenant.assistant_name }}{% endif %}
+        </p>
+        {% endcall %}
+
+    {% else %}
+
+        {% call step_card(1, "Attività", "Nome, fuso orario e lingua del tuo assistente.", "current") %}
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="post" action="/onboarding/business">
+            <label>Nome attività</label>
+            <input type="text" name="business_name" placeholder="Es. Estetica Bellavista" required>
+
+            <label>Nome assistente (opzionale)</label>
+            <input type="text" name="assistant_name" placeholder="Es. Sofia">
+
+            <label>Fuso orario</label>
+            <select name="timezone" required>
+                <option value="Europe/Rome" selected>Europe/Rome (Italia)</option>
+                <option value="Europe/London">Europe/London</option>
+                <option value="UTC">UTC</option>
+            </select>
+
+            <label>Lingua</label>
+            <select name="language" required>
+                <option value="it" selected>Italiano</option>
+                <option value="en">English</option>
+            </select>
+
+            <button type="submit">Salva e continua</button>
+        </form>
+        {% endcall %}
+
+    {% endif %}
+
+    {{ step_card(2, "WhatsApp Business", "Collega il numero da cui risponderà l'assistente. Necessario per andare live.", "done" if has_whatsapp else ("todo" if steps_unlocked else "locked"), href="/onboarding/whatsapp") }}
+    {{ step_card(3, "Orari di apertura", "Quando il tuo assistente può proporre appuntamenti.", "done" if has_hours else ("todo" if steps_unlocked else "locked"), href="/onboarding/hours") }}
+    {{ step_card(4, "Servizi", "Almeno un servizio, con nome e durata.", "done" if has_services else ("todo" if steps_unlocked else "locked"), href="/onboarding/services") }}
+    {{ step_card(5, "Domande frequenti", "Facoltativo — risposte pronte per le domande più comuni.", "todo" if steps_unlocked else "locked", href="/onboarding/faq") }}
+
+    <p class="muted-link" style="margin-top:24px;"><a href="/logout">Esci</a></p>
+</div>
+{% endblock %}
