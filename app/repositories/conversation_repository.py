@@ -202,7 +202,7 @@ def get_or_create_conversation(tenant_id: str, customer_id: str):
         existing = response.data[0]
 
         if not _is_stale(existing):
-            return existing
+           return existing, False 
 
         # Conversazione scaduta: la chiudiamo esplicitamente
         # (non la lasciamo "scaduta ma non dichiarata").
@@ -225,7 +225,7 @@ def get_or_create_conversation(tenant_id: str, customer_id: str):
         .execute()
     )
 
-    return response.data[0]
+    return response.data[0], True 
 
 
 def get_or_create_context(conversation_id: str, language: str):
