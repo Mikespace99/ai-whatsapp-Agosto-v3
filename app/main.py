@@ -550,7 +550,7 @@ def process_message(message):
         transitions=transitions_log,
         services=services,
         whatsapp_account=whatsapp_account,
-        suspended=suspended
+        suspended=suspended,
         is_new_session=is_new_session
     )
     context["ai"] = intent_result
