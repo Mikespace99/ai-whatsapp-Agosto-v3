@@ -411,7 +411,7 @@ def process_message(message):
         transitions=transitions_log,
         services=services,
         whatsapp_account=whatsapp_account,
-        suspended=suspended
+        suspended=suspended,
         is_new_session=is_new_session
     )
 
@@ -511,7 +511,7 @@ def process_message(message):
             services=services,
             whatsapp_account=whatsapp_account,
             suspended=suspended,
-            blocked=routing["blocked"]
+            blocked=routing["blocked"],
             is_new_session=is_new_session
         )
         context["ai"] = intent_result
@@ -577,7 +577,7 @@ def process_message(message):
             blocked={
                 "attempted_intent": intent_result.get("intent"),
                 "reason": "n8n_unavailable"
-            }
+            },
             is_new_session=is_new_session
         )
         error_context["ai"] = intent_result
