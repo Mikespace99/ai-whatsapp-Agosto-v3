@@ -347,7 +347,7 @@ def process_message(message):
     #    gia' il timeout di 15 minuti internamente)
     # --------------------------------------------------
 
-    conversation = get_or_create_conversation(tenant_id, customer["id"])
+    conversation, is_new_session = get_or_create_conversation(tenant_id, customer["id"])
 
     # Registriamo l'attivita' SUBITO, indipendentemente da come
     # andra' il resto della pipeline (Addendum v1.1, Sezione 1).
