@@ -412,6 +412,7 @@ def process_message(message):
         services=services,
         whatsapp_account=whatsapp_account,
         suspended=suspended
+        is_new_session=is_new_session
     )
 
     # --------------------------------------------------
@@ -511,6 +512,7 @@ def process_message(message):
             whatsapp_account=whatsapp_account,
             suspended=suspended,
             blocked=routing["blocked"]
+            is_new_session=is_new_session
         )
         context["ai"] = intent_result
 
@@ -549,6 +551,7 @@ def process_message(message):
         services=services,
         whatsapp_account=whatsapp_account,
         suspended=suspended
+        is_new_session=is_new_session
     )
     context["ai"] = intent_result
 
