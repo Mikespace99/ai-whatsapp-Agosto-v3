@@ -578,6 +578,7 @@ def process_message(message):
                 "attempted_intent": intent_result.get("intent"),
                 "reason": "n8n_unavailable"
             }
+            is_new_session=is_new_session
         )
         error_context["ai"] = intent_result
 
